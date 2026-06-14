@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAppContext } from '../context/AppContext'
 
 export default function Returns() {
-  const { returns, adminView } = useAppContext()
+  const { returns, adminView, greenPoints } = useAppContext()
   const navigate = useNavigate()
   const [expanded, setExpanded] = useState(null)
 
@@ -46,7 +46,14 @@ export default function Returns() {
   return (
     <div className="page-container">
       <h2 className="page-title">↩ My Returns</h2>
-      <p className="page-subtitle">{returns.length} processed return{returns.length > 1 ? 's' : ''}</p>
+      <div className="returns-header-row">
+        <p className="page-subtitle" style={{ marginBottom: 0 }}>
+          {returns.length} processed return{returns.length > 1 ? 's' : ''}
+        </p>
+        <div className="green-points-badge">
+          🌱 {greenPoints} Green Points
+        </div>
+      </div>
 
       <div className="returns-list">
         {returns.map((ret, idx) => (
@@ -101,6 +108,11 @@ export default function Returns() {
                     <div className="approved-text">
                       <h4>Routed to: {getRoutingLabel(ret.routingDecision)}</h4>
                       <p>🍃 {ret.carbonSavedKg?.toFixed(1)} kg CO₂ saved by choosing this route</p>
+                      {ret.greenPointsEarned > 0 && (
+                        <p className="green-points-earned">
+                          🌱 You earned {ret.greenPointsEarned} Green Points — redeemable on your next order
+                        </p>
+                      )}
                     </div>
                   </div>
                 )}

@@ -858,6 +858,103 @@
   margin-top: 2rem;
 }
 
+/* ===== RENEWED NEARBY MARKETPLACE ===== */
+.renewed-section {
+  margin-top: 1rem;
+  padding-top: 2rem;
+  border-top: 2px dashed #d1d5db;
+}
+
+.renewed-card {
+  position: relative;
+  border: 2px solid #10b981;
+}
+
+.renewed-badge {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: #10b981;
+  color: white;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.25rem 0.5rem;
+  border-radius: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.renewed-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.renewed-grade {
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-transform: capitalize;
+}
+
+.renewed-distance {
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+.renewed-original {
+  font-size: 0.9rem;
+  color: #9ca3af;
+  text-decoration: line-through;
+  margin-left: 0.5rem;
+  font-weight: 400;
+}
+
+.renewed-passport {
+  font-size: 0.7rem;
+  font-family: 'Courier New', monospace;
+  color: #047857;
+  background: #d1fae5;
+  padding: 0.35rem 0.5rem;
+  border-radius: 0.375rem;
+  margin-bottom: 0.75rem;
+}
+
+.renewed-buy {
+  background: #10b981;
+}
+
+.renewed-buy:hover {
+  background: #059669;
+}
+
+/* ===== GREEN POINTS ===== */
+.returns-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.green-points-badge {
+  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+  border: 1px solid #6ee7b7;
+  color: #065f46;
+  font-weight: 700;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.green-points-earned {
+  color: #059669 !important;
+  font-weight: 600;
+  margin-top: 0.35rem;
+}
+
 /* ===== RETURN MODAL (Orders page) ===== */
 .return-modal {
   max-width: 540px;

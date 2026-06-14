@@ -224,6 +224,7 @@ export default function Orders() {
                     <p><strong>Grade:</strong> {returnModal.assessment.grade}</p>
                     <p><strong>Route:</strong> {getRoutingLabel(returnModal.assessment.routingDecision)}</p>
                     <p><strong>Carbon Saved:</strong> 🍃 {returnModal.assessment.carbonSavedKg?.toFixed(1)} kg</p>
+                    <p><strong>Green Points:</strong> 🌱 +{Math.round((returnModal.assessment.carbonSavedKg || 0) * 10)}</p>
                   </div>
                   <button className="modal-proceed" onClick={() => setReturnModal(null)}>
                     Done ✓

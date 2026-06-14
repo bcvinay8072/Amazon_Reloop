@@ -36,8 +36,23 @@ const products = [
 
 export default function Shop() {
   const navigate = useNavigate()
-  const { addOrder } = useAppContext()
+  const { addOrder, renewedListings, buyRenewed } = useAppContext()
   const [modal, setModal] = useState(null) // { product, warning, loading }
+
+  const getGradeColor = (grade) => {
+    switch (grade) {
+      case 'Pristine': return '#10b981'
+      case 'Good': return '#3b82f6'
+      case 'Fair': return '#f59e0b'
+      case 'Poor': return '#ef4444'
+      default: return '#6b7280'
+    }
+  }
+
+  const handleBuyRenewed = (listing) => {
+    buyRenewed(listing.returnId)
+    navigate('/orders')
+  }
 
   const handleBuy = async (product) => {
     setModal({ product, warning: null, loading: true })
@@ -92,6 +107,53 @@ export default function Shop() {
           </div>
         ))}
       </div>
+
+      {/* Renewed Nearby — the "second life" marketplace */}
+      {renewedListings.length > 0 && (
+        <div className="renewed-section">
+          <h2 className="page-title" style={{ marginTop: '2.5rem' }}>♻️ Renewed Nearby</h2>
+          <p className="page-subtitle">
+            Certified second-life items routed to resale near you — each with a verified condition passport
+          </p>
+
+          <div className="products-grid">
+            {renewedListings.map(item => (
+              <div key={item.returnId} className="product-card renewed-card">
+                <div className="renewed-badge">♻️ Certified Renewed</div>
+                <div className="product-emoji">{item.productEmoji || '📦'}</div>
+                <h3 className="product-name">{item.originalProductName || item.productName}</h3>
+
+                <div className="renewed-meta">
+                  <span
+                    className="renewed-grade"
+                    style={{ color: getGradeColor(item.grade) }}
+                  >
+                    {item.grade} condition
+                  </span>
+                  <span className="renewed-distance">📍 {item.nearbyKm} km away</span>
+                </div>
+
+                <div className="product-price">
+                  ${item.estimatedResalePrice?.toFixed(2)}
+                  {item.originalPrice > item.estimatedResalePrice && (
+                    <span className="renewed-original">${item.originalPrice?.toFixed(2)}</span>
+                  )}
+                </div>
+
+                {item.cryptographicSignature && (
+                  <div className="renewed-passport">
+                    🔒 Verified Passport: {item.cryptographicSignature.slice(0, 10)}…
+                  </div>
+                )}
+
+                <button className="buy-button renewed-buy" onClick={() => handleBuyRenewed(item)}>
+                  Buy Renewed
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {modal && (
         <div className="modal-overlay" onClick={() => !modal.loading && setModal(null)}>
