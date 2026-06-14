@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import OpenAI from 'openai'
 import { useAppContext } from '../context/AppContext'
-import mockReviews from '../../mockReviews.json'
+
+const REVIEWS_ENDPOINT = 'https://zltp5eq0i6.execute-api.us-east-1.amazonaws.com/prod/reviews'
 
 const products = [
   {
@@ -43,63 +43,26 @@ export default function Shop() {
     setModal({ product, warning: null, loading: true })
 
     try {
-      const openai = new OpenAI({
-        baseURL: import.meta.env.VITE_AI_PIPE_URL || 'https://api.groq.com/openai/v1',
-        apiKey: import.meta.env.VITE_AI_PIPE_KEY || import.meta.env.VITE_GROQ_API_KEY,
-        dangerouslyAllowBrowser: true
+      // Call AWS reviews endpoint: queries DynamoDB → Bedrock Nova Micro
+      const response = await fetch(REVIEWS_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          productId: product.id,
+          productName: product.name
+        })
       })
 
-      const productReviews = mockReviews.filter(r => r.product_id === product.id)
-      // Send only negative reviews (rating <= 3) for more focused warnings, limit to 10
-      const negativeReviews = productReviews
-        .filter(r => r.rating <= 3)
-        .slice(0, 10)
-        .map(r => r.review_text)
-      const reviewText = negativeReviews.length > 0
-        ? negativeReviews.join('\n')
-        : 'No negative reviews available.'
-
-      const completion = await openai.chat.completions.create({
-        model: import.meta.env.VITE_AI_PIPE_MODEL || 'meta-llama/llama-4-scout-17b-16e-instruct',
-        messages: [
-          {
-            role: 'user',
-            content: `Here are negative reviews for "${product.name}":\n\n${reviewText}\n\nIn ONE sentence, what is the #1 reason buyers return this product? Start with a percentage estimate.`
-          }
-        ],
-        max_completion_tokens: 150
-      })
-
-      let warning = completion.choices[0]?.message?.content?.trim()
-      console.log('AI response:', completion.choices[0]?.message)
-
-      // If primary model returns empty, fallback to Groq
-      if (!warning && import.meta.env.VITE_GROQ_API_KEY) {
-        const groq = new OpenAI({
-          baseURL: 'https://api.groq.com/openai/v1',
-          apiKey: import.meta.env.VITE_GROQ_API_KEY,
-          dangerouslyAllowBrowser: true
-        })
-        const fallback = await groq.chat.completions.create({
-          model: 'meta-llama/llama-4-scout-17b-16e-instruct',
-          messages: [
-            {
-              role: 'user',
-              content: `Here are negative reviews for "${product.name}":\n\n${reviewText}\n\nIn ONE sentence, what is the #1 reason buyers return this product? Start with a percentage estimate.`
-            }
-          ],
-          temperature: 0.3,
-          max_completion_tokens: 150
-        })
-        warning = fallback.choices[0]?.message?.content?.trim()
-        console.log('Groq fallback response:', warning)
+      if (!response.ok) {
+        throw new Error(`Review service error: ${response.status}`)
       }
 
-      setModal({ product, warning: warning || `⚠️ Based on reviews: This product has a high return rate. Check reviews before purchasing.`, loading: false })
+      const data = await response.json()
+      const warning = data.warning || `⚠️ This product has a high return rate. Check reviews before purchasing.`
+      setModal({ product, warning, loading: false })
     } catch (err) {
-      console.error('AI warning failed:', err)
-      const errorMsg = err?.message || 'Unknown error'
-      setModal({ product, warning: `⚠️ Review analysis unavailable (${errorMsg}). Proceed with caution.`, loading: false })
+      console.error('Review insights failed:', err)
+      setModal({ product, warning: `⚠️ Review analysis unavailable. Proceed with caution.`, loading: false })
     }
   }
 
