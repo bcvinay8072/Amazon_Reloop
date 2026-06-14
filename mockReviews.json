@@ -1,0 +1,722 @@
+[
+  {
+    "review_id": "rev-101",
+    "product_id": "TSHIRT-URBAN-01",
+    "rating": 2,
+    "variant_purchased": "Size: Medium, Color: Black",
+    "return_category": "Size_Mismatch",
+    "review_text": "I always wear a medium, but this feels like an extra small around the shoulders. I couldn't even move my arms properly. Had to return it."
+  },
+  {
+    "review_id": "rev-102",
+    "product_id": "TSHIRT-URBAN-01",
+    "rating": 1,
+    "variant_purchased": "Size: Large, Color: Navy",
+    "return_category": "Size_Mismatch",
+    "review_text": "Way too tight across the chest. It completely shrunk after one cold wash. Returning for a refund."
+  },
+  {
+    "review_id": "rev-103",
+    "product_id": "TSHIRT-URBAN-01",
+    "rating": 3,
+    "variant_purchased": "Size: XL, Color: White",
+    "return_category": "Size_Mismatch",
+    "review_text": "Fabric is great, but the sizing is completely off. If you buy this, you MUST size up at least one full size."
+  },
+  {
+    "review_id": "rev-104",
+    "product_id": "TSHIRT-URBAN-01",
+    "rating": 2,
+    "variant_purchased": "Size: Small, Color: Black",
+    "return_category": "Size_Mismatch",
+    "review_text": "Felt like a compression shirt. Not true to size at all."
+  },
+  {
+    "review_id": "rev-105",
+    "product_id": "TSHIRT-URBAN-01",
+    "rating": 5,
+    "variant_purchased": "Size: Large, Color: Olive",
+    "return_category": "None",
+    "review_text": "I read the reviews and ordered a size up. Fits perfectly if you do that!"
+  },
+  {
+    "review_id": "rev-106",
+    "product_id": "TSHIRT-URBAN-01",
+    "rating": 2,
+    "variant_purchased": "Size: Medium, Color: White",
+    "return_category": "Size_Mismatch",
+    "review_text": "Shoulders are way too narrow. Returning."
+  },
+  {
+    "review_id": "rev-107",
+    "product_id": "TSHIRT-URBAN-01",
+    "rating": 1,
+    "variant_purchased": "Size: XXL, Color: Black",
+    "return_category": "Size_Mismatch",
+    "review_text": "Even the XXL fits like a Large. The sizing chart is totally wrong."
+  },
+  {
+    "review_id": "rev-108",
+    "product_id": "TSHIRT-URBAN-01",
+    "rating": 3,
+    "variant_purchased": "Size: Medium, Color: Navy",
+    "return_category": "None",
+    "review_text": "Good quality but very slim fit. Not for broad shoulders."
+  },
+  {
+    "review_id": "rev-109",
+    "product_id": "TSHIRT-URBAN-01",
+    "rating": 2,
+    "variant_purchased": "Size: Large, Color: Black",
+    "return_category": "Size_Mismatch",
+    "review_text": "Too tight in the chest, restricting movement."
+  },
+  {
+    "review_id": "rev-110",
+    "product_id": "TSHIRT-URBAN-01",
+    "rating": 1,
+    "variant_purchased": "Size: Small, Color: White",
+    "return_category": "Size_Mismatch",
+    "review_text": "Child sizing. Impossibly small. Sending it back."
+  },
+  {
+    "review_id": "rev-111",
+    "product_id": "TSHIRT-URBAN-01",
+    "rating": 2,
+    "variant_purchased": "Size: Large, Color: Olive",
+    "return_category": "Size_Mismatch",
+    "review_text": "Beautiful color, horrible fit. The shoulders seam sits an inch too high."
+  },
+  {
+    "review_id": "rev-112",
+    "product_id": "TSHIRT-URBAN-01",
+    "rating": 1,
+    "variant_purchased": "Size: Medium, Color: Navy",
+    "return_category": "Size_Mismatch",
+    "review_text": "Washed it once on cold and it shrank to a size small. Unacceptable."
+  },
+  {
+    "review_id": "rev-113",
+    "product_id": "TSHIRT-URBAN-01",
+    "rating": 3,
+    "variant_purchased": "Size: XL, Color: Black",
+    "return_category": "Size_Mismatch",
+    "review_text": "Length is fine but it is incredibly tight across the back. Order up."
+  },
+  {
+    "review_id": "rev-114",
+    "product_id": "TSHIRT-URBAN-01",
+    "rating": 2,
+    "variant_purchased": "Size: Small, Color: Navy",
+    "return_category": "Size_Mismatch",
+    "review_text": "I am a slim guy and I could barely get this over my head."
+  },
+  {
+    "review_id": "rev-115",
+    "product_id": "TSHIRT-URBAN-01",
+    "rating": 1,
+    "variant_purchased": "Size: Large, Color: White",
+    "return_category": "Size_Mismatch",
+    "review_text": "Not as advertised. Fits like a muscle shirt. Returning."
+  },
+  {
+    "review_id": "rev-116",
+    "product_id": "TSHIRT-URBAN-01",
+    "rating": 4,
+    "variant_purchased": "Size: XXL, Color: Olive",
+    "return_category": "None",
+    "review_text": "I normally wear XL but got XXL based on reviews. It fits perfectly."
+  },
+  {
+    "review_id": "rev-117",
+    "product_id": "TSHIRT-URBAN-01",
+    "rating": 2,
+    "variant_purchased": "Size: Medium, Color: Black",
+    "return_category": "Size_Mismatch",
+    "review_text": "The neck hole is fine, but the armpits dig in. Too tight."
+  },
+  {
+    "review_id": "rev-118",
+    "product_id": "TSHIRT-URBAN-01",
+    "rating": 1,
+    "variant_purchased": "Size: Large, Color: Navy",
+    "return_category": "Size_Mismatch",
+    "review_text": "I look like a stuffed sausage. The sizing is at least one size too small."
+  },
+  {
+    "review_id": "rev-119",
+    "product_id": "TSHIRT-URBAN-01",
+    "rating": 3,
+    "variant_purchased": "Size: Small, Color: White",
+    "return_category": "Size_Mismatch",
+    "review_text": "Good material, terrible cut. Too tight in the chest."
+  },
+  {
+    "review_id": "rev-120",
+    "product_id": "TSHIRT-URBAN-01",
+    "rating": 2,
+    "variant_purchased": "Size: XL, Color: Olive",
+    "return_category": "Size_Mismatch",
+    "review_text": "Shrunk massively in the dryer. Now it's a crop top. Returning."
+  },
+  {
+    "review_id": "rev-121",
+    "product_id": "TSHIRT-URBAN-01",
+    "rating": 1,
+    "variant_purchased": "Size: Medium, Color: White",
+    "return_category": "Size_Mismatch",
+    "review_text": "Tags say Medium, fits like a Youth Large. Disappointed."
+  },
+  {
+    "review_id": "rev-122",
+    "product_id": "TSHIRT-URBAN-01",
+    "rating": 2,
+    "variant_purchased": "Size: Large, Color: Black",
+    "return_category": "Size_Mismatch",
+    "review_text": "I can't lift my arms without the whole shirt riding up. Way too slim."
+  },
+  {
+    "review_id": "rev-123",
+    "product_id": "TSHIRT-URBAN-01",
+    "rating": 3,
+    "variant_purchased": "Size: XXL, Color: Navy",
+    "return_category": "None",
+    "review_text": "Tight across the chest. If you work out, size up."
+  },
+  {
+    "review_id": "rev-124",
+    "product_id": "TSHIRT-URBAN-01",
+    "rating": 1,
+    "variant_purchased": "Size: Small, Color: Olive",
+    "return_category": "Size_Mismatch",
+    "review_text": "Sizing is completely inaccurate."
+  },
+  {
+    "review_id": "rev-125",
+    "product_id": "TSHIRT-URBAN-01",
+    "rating": 2,
+    "variant_purchased": "Size: Medium, Color: Navy",
+    "return_category": "Size_Mismatch",
+    "review_text": "Arms are too tight. Restricts blood flow."
+  },
+  {
+    "review_id": "rev-126",
+    "product_id": "TSHIRT-URBAN-01",
+    "rating": 4,
+    "variant_purchased": "Size: XL, Color: White",
+    "return_category": "None",
+    "review_text": "Sized up based on the warning. Fits great now."
+  },
+  {
+    "review_id": "rev-127",
+    "product_id": "TSHIRT-URBAN-01",
+    "rating": 1,
+    "variant_purchased": "Size: Large, Color: Olive",
+    "return_category": "Size_Mismatch",
+    "review_text": "Washed it and it is ruined. Shrank horizontally."
+  },
+  {
+    "review_id": "rev-128",
+    "product_id": "TSHIRT-URBAN-01",
+    "rating": 2,
+    "variant_purchased": "Size: XXL, Color: White",
+    "return_category": "Size_Mismatch",
+    "review_text": "For a double XL, this is extremely tight across the lats."
+  },
+  {
+    "review_id": "rev-129",
+    "product_id": "TSHIRT-URBAN-01",
+    "rating": 3,
+    "variant_purchased": "Size: Medium, Color: Black",
+    "return_category": "Size_Mismatch",
+    "review_text": "Looks good but feels restrictive. Will try a large."
+  },
+  {
+    "review_id": "rev-130",
+    "product_id": "TSHIRT-URBAN-01",
+    "rating": 1,
+    "variant_purchased": "Size: Large, Color: Navy",
+    "return_category": "Size_Mismatch",
+    "review_text": "Sizing is a joke. Returning."
+  },
+  {
+    "review_id": "rev-201",
+    "product_id": "SHOE-AERO-99",
+    "rating": 3,
+    "variant_purchased": "Size: 10, Color: White/Blue",
+    "return_category": "Fit_Issue",
+    "review_text": "They look great and the sole is comfortable, but the toe box is incredibly narrow. My pinky toe was crushed."
+  },
+  {
+    "review_id": "rev-202",
+    "product_id": "SHOE-AERO-99",
+    "rating": 2,
+    "variant_purchased": "Size: 11, Color: Black",
+    "return_category": "Fit_Issue",
+    "review_text": "I don't even have wide feet, but these pinch terribly at the front. Unwearable for runs."
+  },
+  {
+    "review_id": "rev-203",
+    "product_id": "SHOE-AERO-99",
+    "rating": 1,
+    "variant_purchased": "Size: 9.5, Color: White/Blue",
+    "return_category": "Fit_Issue",
+    "review_text": "Caused blisters on the sides of my toes within 10 minutes. Extremely narrow design."
+  },
+  {
+    "review_id": "rev-204",
+    "product_id": "SHOE-AERO-99",
+    "rating": 4,
+    "variant_purchased": "Size: 8, Color: Grey",
+    "return_category": "None",
+    "review_text": "I have very narrow feet so these actually fit me perfectly! But avoid if your feet are normal or wide."
+  },
+  {
+    "review_id": "rev-205",
+    "product_id": "SHOE-AERO-99",
+    "rating": 2,
+    "variant_purchased": "Size: 10.5, Color: Black",
+    "return_category": "Fit_Issue",
+    "review_text": "Length is fine, but the width is a joke. Squeezes the life out of my toes."
+  },
+  {
+    "review_id": "rev-206",
+    "product_id": "SHOE-AERO-99",
+    "rating": 2,
+    "variant_purchased": "Size: 12, Color: White/Blue",
+    "return_category": "Fit_Issue",
+    "review_text": "Too tight on the sides. Returning."
+  },
+  {
+    "review_id": "rev-207",
+    "product_id": "SHOE-AERO-99",
+    "rating": 1,
+    "variant_purchased": "Size: 9, Color: Grey",
+    "return_category": "Fit_Issue",
+    "review_text": "Worst toe box ever. Instant return."
+  },
+  {
+    "review_id": "rev-208",
+    "product_id": "SHOE-AERO-99",
+    "rating": 3,
+    "variant_purchased": "Size: 10, Color: Black",
+    "return_category": "None",
+    "review_text": "Okay for walking, but too narrow for running. Keeping them for errands."
+  },
+  {
+    "review_id": "rev-209",
+    "product_id": "SHOE-AERO-99",
+    "rating": 2,
+    "variant_purchased": "Size: 11.5, Color: White/Blue",
+    "return_category": "Fit_Issue",
+    "review_text": "Pinches right at the widest part of the foot."
+  },
+  {
+    "review_id": "rev-210",
+    "product_id": "SHOE-AERO-99",
+    "rating": 1,
+    "variant_purchased": "Size: 8.5, Color: Grey",
+    "return_category": "Fit_Issue",
+    "review_text": "Painfully narrow. Do not buy if you need room for your toes to splay."
+  },
+  {
+    "review_id": "rev-211",
+    "product_id": "SHOE-AERO-99",
+    "rating": 2,
+    "variant_purchased": "Size: 10, Color: Black",
+    "return_category": "Fit_Issue",
+    "review_text": "I sized up a half size and it STILL crushes my toes on the sides."
+  },
+  {
+    "review_id": "rev-212",
+    "product_id": "SHOE-AERO-99",
+    "rating": 1,
+    "variant_purchased": "Size: 11, Color: Grey",
+    "return_category": "Fit_Issue",
+    "review_text": "Impossible to run in these. Way too narrow."
+  },
+  {
+    "review_id": "rev-213",
+    "product_id": "SHOE-AERO-99",
+    "rating": 3,
+    "variant_purchased": "Size: 9, Color: White/Blue",
+    "return_category": "Fit_Issue",
+    "review_text": "Heel is fine, midfoot is fine, toe box is tiny. Returning."
+  },
+  {
+    "review_id": "rev-214",
+    "product_id": "SHOE-AERO-99",
+    "rating": 2,
+    "variant_purchased": "Size: 10.5, Color: Grey",
+    "return_category": "Fit_Issue",
+    "review_text": "Gave me severe blisters on both pinky toes."
+  },
+  {
+    "review_id": "rev-215",
+    "product_id": "SHOE-AERO-99",
+    "rating": 1,
+    "variant_purchased": "Size: 12, Color: Black",
+    "return_category": "Fit_Issue",
+    "review_text": "Unless you have pencil-thin feet, avoid these."
+  },
+  {
+    "review_id": "rev-216",
+    "product_id": "SHOE-AERO-99",
+    "rating": 4,
+    "variant_purchased": "Size: 8, Color: White/Blue",
+    "return_category": "None",
+    "review_text": "Love the bounce, but they are a very snug fit."
+  },
+  {
+    "review_id": "rev-217",
+    "product_id": "SHOE-AERO-99",
+    "rating": 2,
+    "variant_purchased": "Size: 9.5, Color: Black",
+    "return_category": "Fit_Issue",
+    "review_text": "Sides of my feet hurt after just wearing them around the house."
+  },
+  {
+    "review_id": "rev-218",
+    "product_id": "SHOE-AERO-99",
+    "rating": 1,
+    "variant_purchased": "Size: 11, Color: White/Blue",
+    "return_category": "Fit_Issue",
+    "review_text": "Terrible design. Way too tapered at the end."
+  },
+  {
+    "review_id": "rev-219",
+    "product_id": "SHOE-AERO-99",
+    "rating": 2,
+    "variant_purchased": "Size: 10, Color: Grey",
+    "return_category": "Fit_Issue",
+    "review_text": "I couldn't wait to take these off. So tight across the toes."
+  },
+  {
+    "review_id": "rev-220",
+    "product_id": "SHOE-AERO-99",
+    "rating": 3,
+    "variant_purchased": "Size: 8.5, Color: Black",
+    "return_category": "Fit_Issue",
+    "review_text": "Nice shoe, but had to return due to the narrow fit."
+  },
+  {
+    "review_id": "rev-221",
+    "product_id": "SHOE-AERO-99",
+    "rating": 1,
+    "variant_purchased": "Size: 11.5, Color: Grey",
+    "return_category": "Fit_Issue",
+    "review_text": "Not made for human feet. Way too skinny."
+  },
+  {
+    "review_id": "rev-222",
+    "product_id": "SHOE-AERO-99",
+    "rating": 2,
+    "variant_purchased": "Size: 9, Color: White/Blue",
+    "return_category": "Fit_Issue",
+    "review_text": "Pinches so badly on the sides."
+  },
+  {
+    "review_id": "rev-223",
+    "product_id": "SHOE-AERO-99",
+    "rating": 1,
+    "variant_purchased": "Size: 10, Color: Grey",
+    "return_category": "Fit_Issue",
+    "review_text": "Got a blood blister from a 3 mile run because they are so narrow."
+  },
+  {
+    "review_id": "rev-224",
+    "product_id": "SHOE-AERO-99",
+    "rating": 3,
+    "variant_purchased": "Size: 12, Color: Black",
+    "return_category": "Fit_Issue",
+    "review_text": "If they made a wide version I would buy it. Regular is too tight."
+  },
+  {
+    "review_id": "rev-225",
+    "product_id": "SHOE-AERO-99",
+    "rating": 2,
+    "variant_purchased": "Size: 10.5, Color: White/Blue",
+    "return_category": "Fit_Issue",
+    "review_text": "Too much pressure on the sides of the feet."
+  },
+  {
+    "review_id": "rev-226",
+    "product_id": "SHOE-AERO-99",
+    "rating": 1,
+    "variant_purchased": "Size: 9.5, Color: Grey",
+    "return_category": "Fit_Issue",
+    "review_text": "Literally unwearable due to the narrow toe box."
+  },
+  {
+    "review_id": "rev-227",
+    "product_id": "SHOE-AERO-99",
+    "rating": 2,
+    "variant_purchased": "Size: 11, Color: Black",
+    "return_category": "Fit_Issue",
+    "review_text": "Very disappointed in the fit. Too skinny."
+  },
+  {
+    "review_id": "rev-228",
+    "product_id": "SHOE-AERO-99",
+    "rating": 4,
+    "variant_purchased": "Size: 8, Color: White/Blue",
+    "return_category": "None",
+    "review_text": "Good for narrow feet. Sizing is otherwise okay."
+  },
+  {
+    "review_id": "rev-229",
+    "product_id": "SHOE-AERO-99",
+    "rating": 1,
+    "variant_purchased": "Size: 10, Color: Grey",
+    "return_category": "Fit_Issue",
+    "review_text": "My toes went numb. Returning."
+  },
+  {
+    "review_id": "rev-230",
+    "product_id": "SHOE-AERO-99",
+    "rating": 2,
+    "variant_purchased": "Size: 12, Color: Black",
+    "return_category": "Fit_Issue",
+    "review_text": "Why do they make running shoes so narrow? Sent back."
+  },
+  {
+    "review_id": "rev-301",
+    "product_id": "CONT-FRESH-1L",
+    "rating": 1,
+    "variant_purchased": "Capacity: 1000ml, Pack of 4",
+    "return_category": "Item_Defect_Misc",
+    "review_text": "Total false advertising. I bought these specifically to meal prep 1000ml portions. It maxes out at 800ml. If you put any more in, the lid won't close."
+  },
+  {
+    "review_id": "rev-302",
+    "product_id": "CONT-FRESH-1L",
+    "rating": 2,
+    "variant_purchased": "Capacity: 1000ml, Pack of 4",
+    "return_category": "Item_Defect_Misc",
+    "review_text": "Good quality plastic, but they only hold about 850ml safely. Really annoying."
+  },
+  {
+    "review_id": "rev-303",
+    "product_id": "CONT-FRESH-1L",
+    "rating": 1,
+    "variant_purchased": "Capacity: 1000ml, Pack of 4",
+    "return_category": "Item_Defect_Misc",
+    "review_text": "I measured it with a measuring cup. It overflows at 900ml. Returning because it's not the advertised size."
+  },
+  {
+    "review_id": "rev-304",
+    "product_id": "CONT-FRESH-1L",
+    "rating": 4,
+    "variant_purchased": "Capacity: 1000ml, Pack of 4",
+    "return_category": "None",
+    "review_text": "Great containers, lock tightly. Note that they are smaller than 1L though, probably closer to 800ml."
+  },
+  {
+    "review_id": "rev-305",
+    "product_id": "CONT-FRESH-1L",
+    "rating": 1,
+    "variant_purchased": "Capacity: 1000ml, Pack of 4",
+    "return_category": "Item_Defect_Misc",
+    "review_text": "Lid pops off if you try to fill it to 1000ml. Useless for my soup prep."
+  },
+  {
+    "review_id": "rev-306",
+    "product_id": "CONT-FRESH-1L",
+    "rating": 2,
+    "variant_purchased": "Capacity: 1000ml, Pack of 4",
+    "return_category": "Item_Defect_Misc",
+    "review_text": "Way smaller than expected. False capacity listed."
+  },
+  {
+    "review_id": "rev-307",
+    "product_id": "CONT-FRESH-1L",
+    "rating": 1,
+    "variant_purchased": "Capacity: 1000ml, Pack of 4",
+    "return_category": "Item_Defect_Misc",
+    "review_text": "Not 1 liter. Pure and simple."
+  },
+  {
+    "review_id": "rev-308",
+    "product_id": "CONT-FRESH-1L",
+    "rating": 3,
+    "variant_purchased": "Capacity: 1000ml, Pack of 4",
+    "return_category": "None",
+    "review_text": "Sturdy, but definitely not 1000ml. Keeping them for smaller snacks."
+  },
+  {
+    "review_id": "rev-309",
+    "product_id": "CONT-FRESH-1L",
+    "rating": 1,
+    "variant_purchased": "Capacity: 1000ml, Pack of 4",
+    "return_category": "Item_Defect_Misc",
+    "review_text": "Liquid spilled everywhere because I tried to put 1L of water in it. Actual volume is ~800ml."
+  },
+  {
+    "review_id": "rev-310",
+    "product_id": "CONT-FRESH-1L",
+    "rating": 2,
+    "variant_purchased": "Capacity: 1000ml, Pack of 4",
+    "return_category": "Item_Defect_Misc",
+    "review_text": "Nice design but the capacity is a lie. Sending them back to Amazon."
+  },
+  {
+    "review_id": "rev-311",
+    "product_id": "CONT-FRESH-1L",
+    "rating": 2,
+    "variant_purchased": "Capacity: 1000ml, Pack of 4",
+    "return_category": "Item_Defect_Misc",
+    "review_text": "I tried to fit a liter of broth in here and it spilled everywhere. It's 850ml max."
+  },
+  {
+    "review_id": "rev-312",
+    "product_id": "CONT-FRESH-1L",
+    "rating": 1,
+    "variant_purchased": "Capacity: 1000ml, Pack of 4",
+    "return_category": "Item_Defect_Misc",
+    "review_text": "Misleading product title. These are 800ml containers."
+  },
+  {
+    "review_id": "rev-313",
+    "product_id": "CONT-FRESH-1L",
+    "rating": 3,
+    "variant_purchased": "Capacity: 1000ml, Pack of 4",
+    "return_category": "Item_Defect_Misc",
+    "review_text": "They stack well, but deduct stars for inaccurate volume."
+  },
+  {
+    "review_id": "rev-314",
+    "product_id": "CONT-FRESH-1L",
+    "rating": 1,
+    "variant_purchased": "Capacity: 1000ml, Pack of 4",
+    "return_category": "Item_Defect_Misc",
+    "review_text": "Do not buy if you actually need a full 1000ml. Returning."
+  },
+  {
+    "review_id": "rev-315",
+    "product_id": "CONT-FRESH-1L",
+    "rating": 2,
+    "variant_purchased": "Capacity: 1000ml, Pack of 4",
+    "return_category": "Item_Defect_Misc",
+    "review_text": "Too small. Disappointed."
+  },
+  {
+    "review_id": "rev-316",
+    "product_id": "CONT-FRESH-1L",
+    "rating": 1,
+    "variant_purchased": "Capacity: 1000ml, Pack of 4",
+    "return_category": "Item_Defect_Misc",
+    "review_text": "If you fill it to 1000ml, the lid physically cannot attach."
+  },
+  {
+    "review_id": "rev-317",
+    "product_id": "CONT-FRESH-1L",
+    "rating": 2,
+    "variant_purchased": "Capacity: 1000ml, Pack of 4",
+    "return_category": "Item_Defect_Misc",
+    "review_text": "Measurements on the side are wrong."
+  },
+  {
+    "review_id": "rev-318",
+    "product_id": "CONT-FRESH-1L",
+    "rating": 4,
+    "variant_purchased": "Capacity: 1000ml, Pack of 4",
+    "return_category": "None",
+    "review_text": "Good for leftovers, but aware they are smaller than claimed."
+  },
+  {
+    "review_id": "rev-319",
+    "product_id": "CONT-FRESH-1L",
+    "rating": 1,
+    "variant_purchased": "Capacity: 1000ml, Pack of 4",
+    "return_category": "Item_Defect_Misc",
+    "review_text": "Very frustrating. Needed exactly 1L and these failed."
+  },
+  {
+    "review_id": "rev-320",
+    "product_id": "CONT-FRESH-1L",
+    "rating": 2,
+    "variant_purchased": "Capacity: 1000ml, Pack of 4",
+    "return_category": "Item_Defect_Misc",
+    "review_text": "Volume is closer to 850ml. Misleading."
+  },
+  {
+    "review_id": "rev-321",
+    "product_id": "CONT-FRESH-1L",
+    "rating": 1,
+    "variant_purchased": "Capacity: 1000ml, Pack of 4",
+    "return_category": "Item_Defect_Misc",
+    "review_text": "Will be returning. Did not hold the advertised amount."
+  },
+  {
+    "review_id": "rev-322",
+    "product_id": "CONT-FRESH-1L",
+    "rating": 3,
+    "variant_purchased": "Capacity: 1000ml, Pack of 4",
+    "return_category": "Item_Defect_Misc",
+    "review_text": "Lids are secure, but you can only fill them about 80% full."
+  },
+  {
+    "review_id": "rev-323",
+    "product_id": "CONT-FRESH-1L",
+    "rating": 1,
+    "variant_purchased": "Capacity: 1000ml, Pack of 4",
+    "return_category": "Item_Defect_Misc",
+    "review_text": "Totally inaccurate size description."
+  },
+  {
+    "review_id": "rev-324",
+    "product_id": "CONT-FRESH-1L",
+    "rating": 2,
+    "variant_purchased": "Capacity: 1000ml, Pack of 4",
+    "return_category": "Item_Defect_Misc",
+    "review_text": "Holds maybe 3 cups, not 4. Returning."
+  },
+  {
+    "review_id": "rev-325",
+    "product_id": "CONT-FRESH-1L",
+    "rating": 1,
+    "variant_purchased": "Capacity: 1000ml, Pack of 4",
+    "return_category": "Item_Defect_Misc",
+    "review_text": "Do not buy if you are strict on volume sizing."
+  },
+  {
+    "review_id": "rev-326",
+    "product_id": "CONT-FRESH-1L",
+    "rating": 2,
+    "variant_purchased": "Capacity: 1000ml, Pack of 4",
+    "return_category": "Item_Defect_Misc",
+    "review_text": "Smaller than advertised. Beware."
+  },
+  {
+    "review_id": "rev-327",
+    "product_id": "CONT-FRESH-1L",
+    "rating": 1,
+    "variant_purchased": "Capacity: 1000ml, Pack of 4",
+    "return_category": "Item_Defect_Misc",
+    "review_text": "Made a huge mess because I thought it was 1000ml. It's not."
+  },
+  {
+    "review_id": "rev-328",
+    "product_id": "CONT-FRESH-1L",
+    "rating": 3,
+    "variant_purchased": "Capacity: 1000ml, Pack of 4",
+    "return_category": "None",
+    "review_text": "Quality is fine but they lie about the size."
+  },
+  {
+    "review_id": "rev-329",
+    "product_id": "CONT-FRESH-1L",
+    "rating": 1,
+    "variant_purchased": "Capacity: 1000ml, Pack of 4",
+    "return_category": "Item_Defect_Misc",
+    "review_text": "Useless for bulk prep. Volume is off by at least 150ml."
+  },
+  {
+    "review_id": "rev-330",
+    "product_id": "CONT-FRESH-1L",
+    "rating": 2,
+    "variant_purchased": "Capacity: 1000ml, Pack of 4",
+    "return_category": "Item_Defect_Misc",
+    "review_text": "Returning these because they are simply too small."
+  }
+]

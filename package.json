@@ -1,0 +1,25 @@
+{
+  "name": "amazon-reloop",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Amazon Re-Loop - AI-powered product return assessment",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest",
+    "test:ui": "vitest --ui"
+  },
+  "dependencies": {
+    "openai": "^6.42.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^7.17.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.2.1",
+    "@vitest/ui": "^1.1.0",
+    "vite": "^5.0.8",
+    "vitest": "^1.1.0"
+  }
+}
