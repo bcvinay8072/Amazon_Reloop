@@ -6,103 +6,125 @@
 
 ---
 
-## 🎯 Problem Statement
+## 🎯 The Problem
 
-Amazon processes **millions of returns daily**, costing billions in logistics, refurbishment, and waste. Most returns are preventable (sizing issues, misleading descriptions), and those that aren't lack intelligent routing — items get sent back to centralized warehouses regardless of whether a local buyer exists 5 km away.
+Amazon processes **millions of returns daily**, costing billions in logistics, refurbishment, and waste. Two critical gaps exist:
+
+1. **Preventable returns ship anyway** — sizing mismatches and quality issues documented in reviews still result in purchases that get returned
+2. **Returns lack intelligent routing** — items go back to centralized warehouses regardless of whether a local buyer exists nearby
 
 ## 💡 Our Solution
 
-**Amazon Re-Loop** is a full-stack reverse logistics platform that:
+Amazon Re-Loop is a **full-stack serverless platform** with a 3-layer AI pipeline:
 
-1. **Prevents returns before checkout** — AI analyzes 30+ product reviews in real-time and warns buyers about the #1 return reason before purchase
-2. **Grades returned items using multimodal AI** — Amazon Bedrock Nova Lite analyzes product photos to assess condition
-3. **Routes returns using deterministic math + AI** — A Net Recovery Value (NRV) engine calculates optimal margins, then an AI executive makes the final routing decision
-4. **Reduces carbon footprint** — Peer-to-peer local resale avoids warehouse shipping entirely
+| Layer | Function | AWS Service |
+|-------|----------|-------------|
+| **Prevention** | Warns buyers BEFORE checkout using review intelligence | DynamoDB + Bedrock Nova Micro |
+| **Vision Grading** | Analyzes return photos for condition assessment | S3 + Bedrock Nova Lite (multimodal) |
+| **Smart Routing** | Calculates optimal return path using Haversine + NRV math + AI executive | Lambda + Bedrock Nova Lite |
 
 ---
 
 ## 🏗️ Architecture
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│                    AWS AMPLIFY (Frontend)                 │
-│                     React + Vite SPA                      │
-├─────────────┬──────────────────┬────────────────────────┤
-│   /shop     │     /orders      │       /returns          │
-│  AI Review  │  Return Modal    │   History Dashboard     │
-│  Warnings   │  Image Upload    │   Admin NRV View        │
-└──────┬──────┴────────┬─────────┴────────────────────────┘
-       │               │
-       ▼               ▼
-┌─────────────┐  ┌──────────────────────────────────────┐
-│  Groq API   │  │     AWS API GATEWAY + LAMBDA          │
-│  (Reviews)  │  │                                        │
-│  Llama 4    │  │  1. Haversine Distance Calculation     │
-│  Scout      │  │  2. NRV Margin Math Engine             │
-└─────────────┘  │  3. Amazon Bedrock Nova Lite           │
-                 │     (Multimodal Vision + Routing)       │
-                 └──────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────┐
+│                     AWS AMPLIFY (React SPA)                        │
+│                   React 18 + Vite + React Router                  │
+├────────────┬──────────────────────┬──────────────────────────────┤
+│  /shop     │      /orders         │         /returns              │
+│  Buy Flow  │   Return Intake      │    History Dashboard          │
+└─────┬──────┴──────────┬───────────┴──────────────────────────────┘
+      │                 │
+      ▼                 │   ① POST /upload-urls → Pre-signed S3 URLs
+┌───────────┐           │   ② PUT direct to S3 (parallel, no size limit)
+│  POST     │           │   ③ POST /return { imageKeys, metadata }
+│ /reviews  │           ▼
+└─────┬─────┘    ┌──────────────────────────────────────────┐
+      │          │          RETURN ORCHESTRATOR LAMBDA        │
+      ▼          │                                            │
+┌───────────┐    │  1. Haversine Distance (customer → origin) │
+│ REVIEW    │    │  2. NRV Margin Math (3 routes compared)    │
+│ INSIGHTS  │    │  3. Fetch images from S3                    │
+│ LAMBDA    │    │  4. Bedrock Nova Lite (multimodal vision)   │
+│           │    │  5. AI Executive Routing Decision            │
+│ Query     │    └──────────────────────────────────────────┘
+│ DynamoDB  │
+│ → Nova    │    ┌──────────────────────────────────────────┐
+│   Micro   │    │              S3 BUCKET                     │
+└───────────┘    │   returns/{sessionId}/image-0.jpg          │
+                 │   Permanent audit trail + fraud evidence    │
+                 └──────────────────────────────────────────┘
 ```
 
 ---
 
-## ✨ Key Features
+## ✨ Key Technical Achievements
 
-### 🛡️ Component 1: Prevention Before Cure
-- LLM analyzes **30 real product reviews** per item at checkout
-- Warns buyers: *"~90% of reviewers report this runs 1-2 sizes too small"*
-- Uses OpenAI SDK with AIPipe proxy + Groq fallback
-- **Impact**: Prevents returns before they happen
+### 🛡️ Prevention Layer — Stop Returns Before They Happen
+- **DynamoDB** stores 90 product reviews (30 per product)
+- **Bedrock Nova Micro** (text-only, sub-second) summarizes the #1 return reason
+- Intercepts at checkout: *"~80% of buyers report this runs 1-2 sizes too small"*
+- Dedicated microservice Lambda with read-only DynamoDB access
 
-### 📸 Component 2: Multimodal Visual Grading
-- Customer uploads **1-5 product photos** during return
-- Images sent as base64 to AWS Lambda
-- **Amazon Bedrock Nova Lite** performs server-side multimodal analysis
-- Returns: product identification, condition grade (Pristine/Good/Fair/Poor), confidence score, detected issues
+### 📸 Pre-signed S3 Upload Pipeline — Enterprise-Grade Image Handling
+- Frontend requests **pre-signed PUT URLs** from a dedicated Lambda
+- Images upload **directly to S3** in parallel (bypasses API Gateway's 10MB limit)
+- Supports 5 high-resolution photos per return without payload bloat
+- Images permanently stored = **tamper-proof photographic audit trail**
 
-### 📊 Component 3: Deterministic NRV Routing Engine
-- **Haversine formula** calculates exact distance (km) from customer to origin fulfillment center
+### 🤖 Multimodal Vision Grading — Server-Side AI
+- Return orchestrator Lambda reads images **from S3** (not base64 payloads)
+- **Amazon Bedrock Nova Lite** performs multimodal analysis:
+  - Product identification
+  - Condition grade (Pristine / Good / Fair / Poor)
+  - Confidence score
+  - Specific defect detection
+  - Transparency passport generation
+
+### 📊 Deterministic NRV Routing Engine
+- **Haversine formula** calculates exact distance (km) between customer and origin FC
 - **Dynamic logistics cost**: `distance × $0.05/km`
-- Calculates three competing margins:
-  - `marginWarehouse = resalePrice × 0.60 - logisticsCost`
-  - `marginP2P = resalePrice × 0.75`
-  - `marginRefurbish = originalPrice × 0.45 - (logisticsCost × 0.5)`
+- Three competing margin calculations:
+  - `marginWarehouse = resalePrice × 0.60 − logisticsCost`
+  - `marginP2P = resalePrice × 0.75` (local resale, no shipping)
+  - `marginRefurbish = originalPrice × 0.45 − (logisticsCost × 0.5)`
+- **AI Executive Decision** (Nova Lite) picks the optimal route based on both visual grade AND financial margins
 
-### 🤖 Component 4: Hybrid AI Executive Decision
-- After math calculates margins, **Bedrock Nova Lite** makes the final routing call
-- Considers both visual condition AND financial margins
-- Routes: `PEER_TO_PEER_RESALE` | `RESTOCK_MAIN_WAREHOUSE` | `AMAZON_RENEWED` | `DONATE_RECYCLE`
+### 🔒 Cryptographic Transparency Passport
+- Every processed return gets a **SHA-256 digital signature**
+- Immutable record: `itemId + grade + timestamp` → 64-char hex hash
+- Blockchain-ready audit trail for buyer transparency
 
-### 🔒 Component 5: Cryptographic Transparency Passport
-- Every return gets a **SHA-256 digital signature**
-- Immutable record combining itemId + grade + timestamp
-- Provides blockchain-ready audit trail for buyers
-
-### 🍃 Component 6: Carbon Impact Tracking
-- Each routing decision includes estimated CO₂ savings
-- P2P local resale saves **3.2 kg** (no warehouse shipping)
-- Warehouse return: 0.8 kg | Refurbish: 1.8 kg | Recycle: 1.2 kg
+### 🍃 Carbon Impact Quantification
+- Each routing decision includes CO₂ savings vs landfill:
+  - P2P local resale: **3.2 kg** saved (no warehouse shipping)
+  - Warehouse restock: 0.8 kg
+  - Refurbishment: 1.8 kg
+  - Donate/Recycle: 1.2 kg
 
 ---
 
-## 🛒 User Flow
+## 🛒 User Flow (Demo Walkthrough)
 
 ```
-1. SHOP → Browse 3 products → Click "Buy Now"
-   ↓
-2. AI WARNING MODAL → LLM summarizes top return reason from reviews
-   ↓
-3. PROCEED → Order added to "My Orders" (Delivered)
-   ↓
-4. RETURN → Click "Return Item" → Upload photos + reason
-   ↓
-5. PROCESSING → Images → AWS Lambda → Bedrock Nova (multimodal)
-   ↓
-6. RESULT → Grade, Route, Margins, Carbon Saved, Crypto Signature
-   ↓
-7. RETURNS PAGE → Full history with expandable details
-   ↓
-   (Toggle "Admin View" to see NRV margin breakdown)
+1. SHOP → Browse products → Click "Buy Now"
+       → AI Warning Modal (DynamoDB → Nova Micro)
+       → "Proceed to Checkout" or Cancel
+
+2. ORDERS → See delivered items → Click "Return Item"
+       → Upload 1-5 photos (direct to S3 via pre-signed URLs)
+       → Enter return reason → Submit
+
+3. PROCESSING → Lambda fetches images from S3
+       → Bedrock Nova Lite (multimodal grading + routing)
+       → NRV margin calculations
+       → AI executive decision
+
+4. RETURNS → View completed returns (expandable cards)
+       → Toggle "Admin View" for NRV margin breakdown
+       → Distance, logistics cost, competing margins, AI reasoning
+       → Cryptographic signature verification
 ```
 
 ---
@@ -112,14 +134,15 @@ Amazon processes **millions of returns daily**, costing billions in logistics, r
 | Layer | Technology |
 |-------|-----------|
 | **Frontend** | React 18, Vite 5, React Router DOM |
-| **Hosting** | AWS Amplify |
-| **AI (Vision + Routing)** | Amazon Bedrock — Nova Lite (multimodal) |
-| **AI (Review Analysis)** | Groq Llama 4 Scout via OpenAI SDK |
-| **Backend** | AWS Lambda (Node.js 18) |
-| **API** | AWS API Gateway (REST) |
-| **IaC** | AWS CDK (TypeScript) |
-| **Math Engine** | Custom Haversine + NRV margin calculator |
-| **Security** | SHA-256 cryptographic signatures |
+| **Hosting** | AWS Amplify (HTTPS, CI/CD) |
+| **AI Vision + Routing** | Amazon Bedrock Nova Lite (multimodal) |
+| **AI Review Summarization** | Amazon Bedrock Nova Micro (text) |
+| **Image Storage** | Amazon S3 (pre-signed URLs, audit trail) |
+| **Review Database** | Amazon DynamoDB (PAY_PER_REQUEST) |
+| **Compute** | 3× AWS Lambda (Node.js 20, single-responsibility) |
+| **API** | AWS API Gateway (REST, CORS) |
+| **Infrastructure as Code** | AWS CDK (TypeScript) |
+| **Security** | SHA-256 signatures, least-privilege IAM, no client-side secrets |
 
 ---
 
@@ -127,30 +150,23 @@ Amazon processes **millions of returns daily**, costing billions in logistics, r
 
 | Product | Origin Fulfillment Center | Coordinates |
 |---------|--------------------------|-------------|
-| UrbanFit Tee | Bangalore | 12.9716°N, 77.5946°E |
-| AeroStride Sneakers | Chennai | 13.0827°N, 80.2707°E |
-| FreshSeal Storage | Delhi | 28.7041°N, 77.1025°E |
-| **Customer** | **Tirupati** | **13.6288°N, 79.4192°E** |
+| UrbanFit Essential Tee | Bangalore, KA | 12.97°N, 77.59°E |
+| AeroStride Running Sneakers | Chennai, TN | 13.08°N, 80.27°E |
+| FreshSeal Storage Box Set | Delhi, DL | 28.70°N, 77.10°E |
+| **Customer Location** | **Tirupati, AP** | **13.63°N, 79.42°E** |
 
 ---
 
-## 🚀 Quick Start (Local Development)
+## 💰 Business Impact
 
-```bash
-# Clone
-git clone https://github.com/YOUR_USERNAME/amazon-reloop.git
-cd amazon-reloop
-
-# Install
-npm install
-
-# Configure environment
-cp .env.example .env
-# Add your API keys to .env
-
-# Run
-npm run dev
-```
+| Metric | Value |
+|--------|-------|
+| Returns prevented (via AI warnings) | Est. 15-25% reduction |
+| Logistics cost savings (P2P vs warehouse) | Up to 60% per item |
+| Carbon reduction (local resale) | 3.2 kg CO₂ per P2P route |
+| Processing speed | < 5 seconds end-to-end |
+| Max image payload | Unlimited (S3 direct upload) |
+| Scalability | Fully serverless, auto-scales |
 
 ---
 
@@ -160,42 +176,60 @@ npm run dev
 amazon-reloop/
 ├── src/
 │   ├── pages/
-│   │   ├── Shop.jsx          # Product catalog + AI review warnings
-│   │   ├── Orders.jsx        # Order history + return modal (upload + analysis)
-│   │   └── Returns.jsx       # Read-only return history dashboard
+│   │   ├── Shop.jsx            # Product catalog + AI review warnings
+│   │   ├── Orders.jsx          # Order history + return intake modal
+│   │   └── Returns.jsx         # Read-only return history dashboard
 │   ├── services/
-│   │   └── api.js            # Thin client → AWS Lambda
+│   │   └── api.js              # S3 pre-signed upload + Lambda calls
 │   ├── context/
-│   │   └── AppContext.jsx    # Global state (orders, returns, adminView)
-│   ├── App.jsx               # Router + Navbar + Admin toggle
-│   └── App.css               # Full styling
+│   │   └── AppContext.jsx      # Global state (orders, returns, admin toggle)
+│   ├── App.jsx                 # Router + Navbar + Admin View toggle
+│   └── App.css                 # Full styling
 ├── reloop-backend/
-│   ├── backend/
-│   │   └── index.js          # Lambda: Haversine + NRV + Bedrock Nova
-│   └── lib/
-│       └── reloop-backend-stack.ts  # CDK infrastructure
-├── mockReviews.json          # 90 reviews (30 per product)
-├── amplify.yml               # Amplify build config
-└── package.json
+│   ├── backend/index.js        # Return orchestrator (S3 → Nova Lite → NRV)
+│   ├── review-insights/index.js # DynamoDB → Nova Micro review summarizer
+│   ├── upload-urls/index.js    # Pre-signed S3 URL generator
+│   ├── seed-reviews.js         # DynamoDB seeding script (90 reviews)
+│   └── lib/reloop-backend-stack.ts  # CDK infrastructure (3 Lambdas, S3, DDB, APIGW)
+├── mockReviews.json            # 90 curated reviews (30 per product)
+├── amplify.yml                 # Amplify build configuration
+└── package.json                # Frontend dependencies
 ```
 
 ---
 
-## 💰 Business Impact
+## 🚀 Deployment
 
-| Metric | Value |
-|--------|-------|
-| **Returns prevented** (via AI warnings) | Est. 15-25% reduction |
-| **Logistics cost savings** (P2P vs warehouse) | Up to 60% per item |
-| **Carbon reduction** (local resale) | 3.2 kg CO₂ per P2P route |
-| **Processing speed** | < 5 seconds end-to-end |
-| **Scalability** | Serverless — auto-scales to millions |
+```bash
+# Frontend (auto-deploys on git push via Amplify)
+git push origin main
+
+# Backend
+cd reloop-backend
+cdk deploy
+
+# Seed DynamoDB with reviews
+node seed-reviews.js
+```
+
+---
+
+## 🔑 Design Decisions
+
+| Decision | Rationale |
+|----------|-----------|
+| **Separate Lambdas** per concern | Least-privilege IAM, independent scaling, fault isolation |
+| **S3 pre-signed URLs** instead of base64 | Bypasses 10MB API Gateway limit, enables permanent storage |
+| **Nova Micro for text, Nova Lite for vision** | Cost optimization — use smallest model that fits the task |
+| **DynamoDB for reviews** | Server-side data access, no secrets in frontend bundle |
+| **Haversine + deterministic math** | Auditable, explainable routing (not a black-box LLM decision) |
+| **AI executive as final arbiter** | Combines math precision with contextual intelligence |
 
 ---
 
 ## 👥 Team
 
-Built for the **Amazon Hackon 6.0 2026**
+Built for the **Amazon Hackathon 2025**
 
 ---
 
