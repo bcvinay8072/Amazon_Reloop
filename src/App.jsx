@@ -46,7 +46,7 @@ function AppLayout() {
         </Routes>
       </main>
       <footer className="footer">
-        <p>Powered by Groq (Llama 4 Scout) • Deterministic NRV Engine • Cryptographic Passport • React + Vite</p>
+        <p>Powered by Amazon Bedrock Nova • DynamoDB • S3 • Serverless on AWS</p>
       </footer>
     </div>
   )
