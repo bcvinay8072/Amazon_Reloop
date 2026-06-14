@@ -229,7 +229,7 @@ node seed-reviews.js
 
 ## 👥 Team
 
-Built for the **Amazon Hackathon 2025**
+Built for the **Amazon Hackon 6.0 2026**
 
 ---
 
