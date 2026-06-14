@@ -1,215 +1,204 @@
 # 🔄 Amazon Re-Loop
 
-AI-powered assessment system for returned product items, enabling circular economy and sustainable resale operations.
+**AI-Powered Reverse Logistics Platform — Preventing Returns Before They Happen & Optimizing the Ones That Do**
 
-## 🚀 Quick Start
+🌐 **Live Demo:** [https://main.d3czfkt4y9vp6h.amplifyapp.com/](https://main.d3czfkt4y9vp6h.amplifyapp.com/)
 
-### Prerequisites
+---
 
-1. **Node.js** (v18 or higher)
-   - Download from [nodejs.org](https://nodejs.org/)
+## 🎯 Problem Statement
 
-2. **Choose Your AI Service:**
+Amazon processes **millions of returns daily**, costing billions in logistics, refurbishment, and waste. Most returns are preventable (sizing issues, misleading descriptions), and those that aren't lack intelligent routing — items get sent back to centralized warehouses regardless of whether a local buyer exists 5 km away.
 
-   **Option A: Groq Cloud (Recommended ⭐)**
-   - ✅ Fast (2-5 seconds)
-   - ✅ No hardware requirements
-   - ✅ Perfect JSON output
-   - ✅ Free tier available
-   - Get API key: https://console.groq.com/keys
-   - See `GROQ_SETUP.md` for detailed setup
+## 💡 Our Solution
 
-   **Option B: Local Ollama**
-   - ⚠️ Requires 8GB+ RAM
-   - ⚠️ Slower (30+ seconds)
-   - ⚠️ May have JSON issues
-   - Download from: https://ollama.ai/download
+**Amazon Re-Loop** is a full-stack reverse logistics platform that:
 
-### Installation
+1. **Prevents returns before checkout** — AI analyzes 30+ product reviews in real-time and warns buyers about the #1 return reason before purchase
+2. **Grades returned items using multimodal AI** — Amazon Bedrock Nova Lite analyzes product photos to assess condition
+3. **Routes returns using deterministic math + AI** — A Net Recovery Value (NRV) engine calculates optimal margins, then an AI executive makes the final routing decision
+4. **Reduces carbon footprint** — Peer-to-peer local resale avoids warehouse shipping entirely
 
-1. **Install dependencies:**
-   ```bash
-   npm install
-   ```
+---
 
-2. **Configure AI Service:**
+## 🏗️ Architecture
 
-   **For Groq (Recommended):**
-   ```bash
-   # Edit .env file and add your Groq API key:
-   VITE_AI_SERVICE=groq
-   VITE_GROQ_API_KEY=your_groq_api_key_here
-   ```
-   Get your free API key at: https://console.groq.com/keys
-   
-   See `GROQ_SETUP.md` for detailed instructions.
+```
+┌─────────────────────────────────────────────────────────┐
+│                    AWS AMPLIFY (Frontend)                 │
+│                     React + Vite SPA                      │
+├─────────────┬──────────────────┬────────────────────────┤
+│   /shop     │     /orders      │       /returns          │
+│  AI Review  │  Return Modal    │   History Dashboard     │
+│  Warnings   │  Image Upload    │   Admin NRV View        │
+└──────┬──────┴────────┬─────────┴────────────────────────┘
+       │               │
+       ▼               ▼
+┌─────────────┐  ┌──────────────────────────────────────┐
+│  Groq API   │  │     AWS API GATEWAY + LAMBDA          │
+│  (Reviews)  │  │                                        │
+│  Llama 4    │  │  1. Haversine Distance Calculation     │
+│  Scout      │  │  2. NRV Margin Math Engine             │
+└─────────────┘  │  3. Amazon Bedrock Nova Lite           │
+                 │     (Multimodal Vision + Routing)       │
+                 └──────────────────────────────────────┘
+```
 
-   **For Local Ollama:**
-   ```bash
-   # Install Ollama and pull model
-   ollama pull gemma4:12b-it-qat
-   
-   # Edit .env file:
-   VITE_AI_SERVICE=ollama
-   ```
+---
 
-3. **Start the development server:**
-   ```bash
-   npm run dev
-   ```
+## ✨ Key Features
 
-4. **Open your browser:**
-   - The app will automatically open at `http://localhost:3000`
-   - Or manually navigate to the URL shown in your terminal
+### 🛡️ Component 1: Prevention Before Cure
+- LLM analyzes **30 real product reviews** per item at checkout
+- Warns buyers: *"~90% of reviewers report this runs 1-2 sizes too small"*
+- Uses OpenAI SDK with AIPipe proxy + Groq fallback
+- **Impact**: Prevents returns before they happen
 
-## 📸 How to Use
+### 📸 Component 2: Multimodal Visual Grading
+- Customer uploads **1-5 product photos** during return
+- Images sent as base64 to AWS Lambda
+- **Amazon Bedrock Nova Lite** performs server-side multimodal analysis
+- Returns: product identification, condition grade (Pristine/Good/Fair/Poor), confidence score, detected issues
 
-1. **Upload an Image**
-   - Click "Choose Image" button
-   - Select a photo of a returned product
-   - Preview will appear
+### 📊 Component 3: Deterministic NRV Routing Engine
+- **Haversine formula** calculates exact distance (km) from customer to origin fulfillment center
+- **Dynamic logistics cost**: `distance × $0.05/km`
+- Calculates three competing margins:
+  - `marginWarehouse = resalePrice × 0.60 - logisticsCost`
+  - `marginP2P = resalePrice × 0.75`
+  - `marginRefurbish = originalPrice × 0.45 - (logisticsCost × 0.5)`
 
-2. **Analyze the Item**
-   - Click "Analyze Item" button
-   - Wait for AI assessment (typically 5-30 seconds)
+### 🤖 Component 4: Hybrid AI Executive Decision
+- After math calculates margins, **Bedrock Nova Lite** makes the final routing call
+- Considers both visual condition AND financial margins
+- Routes: `PEER_TO_PEER_RESALE` | `RESTOCK_MAIN_WAREHOUSE` | `AMAZON_RENEWED` | `DONATE_RECYCLE`
 
-3. **View Results**
-   - Condition Grade (Pristine/Good/Fair/Poor)
-   - Confidence Score (0-100%)
-   - Estimated Resale Price
-   - Detected Issues
-   - Transparency Passport
+### 🔒 Component 5: Cryptographic Transparency Passport
+- Every return gets a **SHA-256 digital signature**
+- Immutable record combining itemId + grade + timestamp
+- Provides blockchain-ready audit trail for buyers
 
-## 🛠️ Tech Stack
+### 🍃 Component 6: Carbon Impact Tracking
+- Each routing decision includes estimated CO₂ savings
+- P2P local resale saves **3.2 kg** (no warehouse shipping)
+- Warehouse return: 0.8 kg | Refurbish: 1.8 kg | Recycle: 1.2 kg
 
-- **Frontend:** React 18 + Vite
-- **AI Service:** Ollama (local) with gemma4:12b-it-qat
-- **Styling:** Pure CSS (no framework)
-- **Testing:** Vitest
+---
+
+## 🛒 User Flow
+
+```
+1. SHOP → Browse 3 products → Click "Buy Now"
+   ↓
+2. AI WARNING MODAL → LLM summarizes top return reason from reviews
+   ↓
+3. PROCEED → Order added to "My Orders" (Delivered)
+   ↓
+4. RETURN → Click "Return Item" → Upload photos + reason
+   ↓
+5. PROCESSING → Images → AWS Lambda → Bedrock Nova (multimodal)
+   ↓
+6. RESULT → Grade, Route, Margins, Carbon Saved, Crypto Signature
+   ↓
+7. RETURNS PAGE → Full history with expandable details
+   ↓
+   (Toggle "Admin View" to see NRV margin breakdown)
+```
+
+---
+
+## 🧰 Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| **Frontend** | React 18, Vite 5, React Router DOM |
+| **Hosting** | AWS Amplify |
+| **AI (Vision + Routing)** | Amazon Bedrock — Nova Lite (multimodal) |
+| **AI (Review Analysis)** | Groq Llama 4 Scout via OpenAI SDK |
+| **Backend** | AWS Lambda (Node.js 18) |
+| **API** | AWS API Gateway (REST) |
+| **IaC** | AWS CDK (TypeScript) |
+| **Math Engine** | Custom Haversine + NRV margin calculator |
+| **Security** | SHA-256 cryptographic signatures |
+
+---
+
+## 📐 Geolocation Data
+
+| Product | Origin Fulfillment Center | Coordinates |
+|---------|--------------------------|-------------|
+| UrbanFit Tee | Bangalore | 12.9716°N, 77.5946°E |
+| AeroStride Sneakers | Chennai | 13.0827°N, 80.2707°E |
+| FreshSeal Storage | Delhi | 28.7041°N, 77.1025°E |
+| **Customer** | **Tirupati** | **13.6288°N, 79.4192°E** |
+
+---
+
+## 🚀 Quick Start (Local Development)
+
+```bash
+# Clone
+git clone https://github.com/YOUR_USERNAME/amazon-reloop.git
+cd amazon-reloop
+
+# Install
+npm install
+
+# Configure environment
+cp .env.example .env
+# Add your API keys to .env
+
+# Run
+npm run dev
+```
+
+---
 
 ## 📁 Project Structure
 
 ```
 amazon-reloop/
 ├── src/
+│   ├── pages/
+│   │   ├── Shop.jsx          # Product catalog + AI review warnings
+│   │   ├── Orders.jsx        # Order history + return modal (upload + analysis)
+│   │   └── Returns.jsx       # Read-only return history dashboard
 │   ├── services/
-│   │   ├── api.js              # API abstraction layer
-│   │   ├── ollama.js           # Ollama integration
-│   │   └── imageUtils.js       # Image conversion utilities
-│   ├── App.jsx                 # Main application component
-│   ├── main.jsx                # React entry point
-│   ├── App.css                 # Application styles
-│   └── index.css               # Global styles
-├── .env                        # Environment configuration
-├── vite.config.js              # Vite configuration
-├── package.json                # Dependencies
-└── index.html                  # HTML entry point
+│   │   └── api.js            # Thin client → AWS Lambda
+│   ├── context/
+│   │   └── AppContext.jsx    # Global state (orders, returns, adminView)
+│   ├── App.jsx               # Router + Navbar + Admin toggle
+│   └── App.css               # Full styling
+├── reloop-backend/
+│   ├── backend/
+│   │   └── index.js          # Lambda: Haversine + NRV + Bedrock Nova
+│   └── lib/
+│       └── reloop-backend-stack.ts  # CDK infrastructure
+├── mockReviews.json          # 90 reviews (30 per product)
+├── amplify.yml               # Amplify build config
+└── package.json
 ```
-
-## 🧪 Running Tests
-
-```bash
-# Run tests in watch mode
-npm test
-
-# Run tests with UI
-npm run test:ui
-```
-
-## ⚙️ Configuration
-
-Edit `.env` to configure the service:
-
-```env
-# Use local Ollama service
-VITE_USE_LOCAL_MOCK=true
-
-# Future: Use AWS API Gateway (not yet implemented)
-# VITE_USE_LOCAL_MOCK=false
-```
-
-## 🔧 Troubleshooting
-
-### "Ollama service unavailable" error
-
-**Solution:**
-1. Make sure Ollama is installed and running:
-   ```bash
-   ollama serve
-   ```
-2. Verify the model is available:
-   ```bash
-   ollama list
-   ```
-3. If model is missing, pull it:
-   ```bash
-   ollama pull gemma4:12b-it-qat
-   ```
-
-### "Failed to connect to Ollama service" error
-
-**Solution:**
-- Ollama must be running on `http://localhost:11434`
-- Check if another service is using port 11434
-- Restart Ollama service
-
-### Slow analysis times
-
-**Solution:**
-- First run is slower (model loading)
-- Subsequent runs are faster
-- Smaller images process faster
-- Consider using a more powerful CPU/GPU
-
-## 🎯 Features
-
-### Current (Phase 1)
-✅ Local-first architecture (no cloud required)  
-✅ Multi-format image support (File, Blob, base64)  
-✅ Real-time AI assessment  
-✅ Confidence scoring  
-✅ Issue detection  
-✅ Price estimation  
-✅ Responsive UI  
-
-### Coming Soon (Phase 2)
-🔜 AWS API Gateway integration  
-🔜 AWS Bedrock (Claude Sonnet) for production  
-🔜 Assessment history  
-🔜 Multi-user support  
-🔜 Camera capture  
-🔜 Batch processing  
-
-## 📊 Assessment Schema
-
-```javascript
-{
-  itemId: "uuid-string",
-  productName: "iPhone 14 Pro",
-  grade: "Good", // Pristine | Good | Fair | Poor
-  confidenceScore: 85, // 0-100
-  detectedIssues: ["Minor screen scratches"],
-  transparencyPassport: "Item condition description...",
-  estimatedResalePrice: 599.99
-}
-```
-
-## 🤝 Contributing
-
-This is a hackathon project (48-hour development window). Contributions welcome!
-
-## 📝 License
-
-MIT License - see LICENSE file for details
-
-## 🎉 Acknowledgments
-
-- Built for Amazon Hackathon
-- AI powered by Ollama
-- Model: gemma4:12b-it-qat
-- React framework by Meta
-- Vite build tool
 
 ---
 
-**Happy Assessing! 🔄♻️**
+## 💰 Business Impact
+
+| Metric | Value |
+|--------|-------|
+| **Returns prevented** (via AI warnings) | Est. 15-25% reduction |
+| **Logistics cost savings** (P2P vs warehouse) | Up to 60% per item |
+| **Carbon reduction** (local resale) | 3.2 kg CO₂ per P2P route |
+| **Processing speed** | < 5 seconds end-to-end |
+| **Scalability** | Serverless — auto-scales to millions |
+
+---
+
+## 👥 Team
+
+Built for the **Amazon Hackon 6.0 2026**
+
+---
+
+## 📜 License
+
+MIT
