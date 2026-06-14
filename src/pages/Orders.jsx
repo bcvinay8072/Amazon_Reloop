@@ -62,7 +62,9 @@ export default function Orders() {
         originalPrice: order.price,
         productEmoji: order.image,
         returnReason: returnModal.reason,
-        category: order.category
+        category: order.category,
+        originLat: order.originLat,
+        originLon: order.originLon
       }
 
       addReturn(order.orderId, fullAssessment)
