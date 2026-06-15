@@ -30,15 +30,22 @@ dist-ssr
 .env.test.local
 .env.production.local
 
-# CDK Backend
-reloop-backend/node_modules
+# CDK Backend — ignore only build artifacts & deps, keep all source
 reloop-backend/cdk.out
-reloop-backend/*.js
-reloop-backend/*.d.ts
-!reloop-backend/backend/index.js
+reloop-backend/lib/*.js
+reloop-backend/lib/*.d.ts
+reloop-backend/bin/*.js
+reloop-backend/bin/*.d.ts
+reloop-backend/test/*.js
+reloop-backend/test/*.d.ts
 
 # Kiro specs (optional - remove if you want to track these)
 .kiro/
 
 # Misc
 *.md.bak
+
+# Local-only documents (keep on disk, never push to repo)
+*.docx
+*.pdf
+*.drawio

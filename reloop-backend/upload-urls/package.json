@@ -1,0 +1,10 @@
+{
+  "name": "upload-urls-lambda",
+  "version": "1.0.0",
+  "description": "Generates pre-signed S3 URLs for direct image upload",
+  "main": "index.js",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.654.0",
+    "@aws-sdk/s3-request-presigner": "^3.654.0"
+  }
+}

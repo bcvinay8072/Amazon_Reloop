@@ -1,0 +1,11 @@
+node_modules
+.cdk.staging
+cdk.out
+
+# Compiled TypeScript output (CDK build artifacts only)
+lib/*.js
+lib/*.d.ts
+bin/*.js
+bin/*.d.ts
+test/*.js
+test/*.d.ts

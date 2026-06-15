@@ -15,13 +15,14 @@ Amazon processes **millions of returns daily**, costing billions in logistics, r
 
 ## 💡 Our Solution
 
-Amazon Re-Loop is a **full-stack serverless platform** with a 3-layer AI pipeline:
+Amazon Re-Loop is a **full-stack serverless platform** with a 4-layer AI pipeline that closes the full "second life" loop:
 
 | Layer | Function | AWS Service |
 |-------|----------|-------------|
 | **Prevention** | Warns buyers BEFORE checkout using review intelligence | DynamoDB + Bedrock Nova Micro |
 | **Vision Grading** | Analyzes return photos for condition assessment | S3 + Bedrock Nova Lite (multimodal) |
-| **Smart Routing** | Calculates optimal return path using Haversine + NRV math + AI executive | Lambda + Bedrock Nova Lite |
+| **Smart Routing** | Condition-aware Net Recovery Value (NRV) engine picks the optimal route | Lambda (Haversine + deterministic math) |
+| **Second Life** | Resold items reappear in a "Renewed Nearby" marketplace; customers earn Green Points | React state + Transparency Passport |
 
 ---
 
@@ -33,7 +34,9 @@ Amazon Re-Loop is a **full-stack serverless platform** with a 3-layer AI pipelin
 │                   React 18 + Vite + React Router                  │
 ├────────────┬──────────────────────┬──────────────────────────────┤
 │  /shop     │      /orders         │         /returns              │
-│  Buy Flow  │   Return Intake      │    History Dashboard          │
+│  Buy +     │   Return Intake      │    History Dashboard          │
+│  Renewed   │   (photo upload)     │    + Green Points             │
+│  Nearby    │                      │                               │
 └─────┬──────┴──────────┬───────────┴──────────────────────────────┘
       │                 │
       ▼                 │   ① POST /upload-urls → Pre-signed S3 URLs
@@ -43,18 +46,22 @@ Amazon Re-Loop is a **full-stack serverless platform** with a 3-layer AI pipelin
 └─────┬─────┘    ┌──────────────────────────────────────────┐
       │          │          RETURN ORCHESTRATOR LAMBDA        │
       ▼          │                                            │
-┌───────────┐    │  1. Haversine Distance (customer → origin) │
-│ REVIEW    │    │  2. NRV Margin Math (3 routes compared)    │
-│ INSIGHTS  │    │  3. Fetch images from S3                    │
-│ LAMBDA    │    │  4. Bedrock Nova Lite (multimodal vision)   │
-│           │    │  5. AI Executive Routing Decision            │
-│ Query     │    └──────────────────────────────────────────┘
-│ DynamoDB  │
-│ → Nova    │    ┌──────────────────────────────────────────┐
-│   Micro   │    │              S3 BUCKET                     │
-└───────────┘    │   returns/{sessionId}/image-0.jpg          │
+┌───────────┐    │  1. Fetch images from S3                   │
+│ REVIEW    │    │  2. Nova Lite — multimodal VISION GRADING  │
+│ INSIGHTS  │    │     (grade + condition-adjusted resale $)  │
+│ LAMBDA    │    │  3. Haversine distance → logistics cost    │
+│           │    │  4. Condition-aware NRV margin math        │
+│ Query     │    │  5. Deterministic routing (highest margin) │
+│ DynamoDB  │    └──────────────────────────────────────────┘
+│ → Nova    │
+│   Micro   │    ┌──────────────────────────────────────────┐
+└───────────┘    │              S3 BUCKET                     │
+                 │   returns/{sessionId}/image-0.jpg          │
                  │   Permanent audit trail + fraud evidence    │
                  └──────────────────────────────────────────┘
+
+  Routed to P2P/Renewed → item re-lists in "Renewed Nearby" on /shop
+  → another customer buys it with a verified Transparency Passport
 ```
 
 ---
@@ -81,15 +88,34 @@ Amazon Re-Loop is a **full-stack serverless platform** with a 3-layer AI pipelin
   - Confidence score
   - Specific defect detection
   - Transparency passport generation
+  - **Condition-adjusted resale value** — the foundation of all routing math
 
-### 📊 Deterministic NRV Routing Engine
+### 📊 Condition-Aware NRV Routing Engine
 - **Haversine formula** calculates exact distance (km) between customer and origin FC
 - **Dynamic logistics cost**: `distance × $0.05/km`
-- Three competing margin calculations:
-  - `marginWarehouse = resalePrice × 0.60 − logisticsCost`
-  - `marginP2P = resalePrice × 0.75` (local resale, no shipping)
-  - `marginRefurbish = originalPrice × 0.45 − (logisticsCost × 0.5)`
-- **AI Executive Decision** (Nova Lite) picks the optimal route based on both visual grade AND financial margins
+- The AI's **condition-adjusted resale value (R)** drives every channel — so damage genuinely changes the economics
+- Condition-dependent coefficients (more wear → less restock value, more refurb uplift):
+
+  | Channel | Formula |
+  |---------|---------|
+  | Peer-to-Peer | `R × 0.90` (local sale, 10% fee, no shipping) |
+  | Warehouse restock | `R × restockFactor − logistics` (0.95 Pristine → 0.55 Fair) |
+  | Refurbishment | `R × refurbUplift − $15 labor` (1.0 Pristine → 1.4 Fair) |
+
+- **Deterministic routing**: the channel with the highest net recovery wins — the decision is always the highest computed margin, fully auditable
+- **Poor-grade items** fail the resale quality bar → resale channels disqualified → **Donate / Recycle**
+- The AI sees damage; **transparent math** makes the money decision (no black-box LLM routing)
+
+### ♻️ Second-Life Marketplace ("Renewed Nearby")
+- Items routed to **P2P Resale** or **Amazon Renewed** automatically re-list on the Shop page
+- Each listing shows: condition grade, distance ("📍 4 km away"), discounted price, and the **🔒 Verified Transparency Passport** as a trust badge
+- Another customer can **Buy Renewed** → item moves to their Orders and can even be returned again (2nd, 3rd life)
+- This closes the full loop the theme demands: *return → grade → route → resold → bought with trust*
+
+### 🍃 Green Credits — Customer Sustainability Incentive
+- Each return earns **Green Points** = `carbonSavedKg × 10`
+- Surfaced on the return confirmation, the Returns dashboard, and as a running total
+- Directly implements the brief's "sustainable incentives and green credits for customers"
 
 ### 🔒 Cryptographic Transparency Passport
 - Every processed return gets a **SHA-256 digital signature**
@@ -123,8 +149,13 @@ Amazon Re-Loop is a **full-stack serverless platform** with a 3-layer AI pipelin
 
 4. RETURNS → View completed returns (expandable cards)
        → Toggle "Admin View" for NRV margin breakdown
-       → Distance, logistics cost, competing margins, AI reasoning
+       → Distance, logistics cost, competing margins, routing reasoning
        → Cryptographic signature verification
+       → 🌱 Green Points earned
+
+5. SECOND LIFE → Item routed to P2P/Renewed re-lists in "Renewed Nearby" on /shop
+       → Another customer buys it with the verified Transparency Passport
+       → Loop closes (and can repeat for a 3rd, 4th life)
 ```
 
 ---
@@ -167,6 +198,20 @@ Amazon Re-Loop is a **full-stack serverless platform** with a 3-layer AI pipelin
 | Processing speed | < 5 seconds end-to-end |
 | Max image payload | Unlimited (S3 direct upload) |
 | Scalability | Fully serverless, auto-scales |
+| Customer incentive | Green Points (carbon × 10) per return |
+
+---
+
+## ✅ Theme Coverage — "Second Life Commerce"
+
+| Capability from the brief | Our Implementation |
+|---------------------------|--------------------|
+| AI decides resell / refurbish / donate / recycle | Condition-aware NRV routing engine (4 routes) ✅ |
+| Smart quality grading via image analysis | Bedrock Nova Lite multimodal (1-5 photos) ✅ |
+| Easy peer-to-peer resale inside Amazon | "Renewed Nearby" marketplace ✅ |
+| Personalized refurbished recommendations | "Renewed Nearby" surfaces nearby certified items ✅ |
+| Sustainable incentives / green credits | Green Points per return ✅ |
+| Predictive return prevention before purchase | DynamoDB reviews → Nova Micro warning at checkout ✅ |
 
 ---
 
@@ -223,7 +268,8 @@ node seed-reviews.js
 | **Nova Micro for text, Nova Lite for vision** | Cost optimization — use smallest model that fits the task |
 | **DynamoDB for reviews** | Server-side data access, no secrets in frontend bundle |
 | **Haversine + deterministic math** | Auditable, explainable routing (not a black-box LLM decision) |
-| **AI executive as final arbiter** | Combines math precision with contextual intelligence |
+| **AI grades, math routes** | Nova assesses condition; condition-adjusted margins decide the route — every decision is the highest computed margin, defensible in Q&A |
+| **Condition-aware coefficients** | Damage genuinely changes margins; refurbishment only rewarded when there's wear to fix |
 
 ---
 
